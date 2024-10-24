@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CCRS.Business.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CCRS.Api.ViewModels
 {
@@ -15,7 +16,9 @@ namespace CCRS.Api.ViewModels
         [Compare("Password", ErrorMessage = "As senhas não conferem.")]
         public string ConfirmPassword { get; set; }
 
-        public bool IsDoctor { get; set; }  // Indica se é um médico
+        //public bool IsDoctor { get; set; }  // Indica se é um médico
+
+        public UserRole UserRole { get; set; }
 
         //public Guid? DoctorId { get; set; }  // Se for paciente, este campo deve ter o ID do médico
     }
