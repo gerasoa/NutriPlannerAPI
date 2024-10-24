@@ -23,6 +23,7 @@ namespace CCRS.Api.V1.Controllers
         private readonly AppSettings _appSettings;
         private readonly IEmailService _emailService;
         private readonly IEmailTemplateService _emailTemplateService;
+        private readonly UserRoleFactory _roleFactory;
 
         public AuthController(INotifier notifier,
                 SignInManager<IdentityUser> signUserManager,
@@ -30,13 +31,15 @@ namespace CCRS.Api.V1.Controllers
                 IOptions<AppSettings> appSettings,
                 IUser user,
                 IEmailService emailService,
-                IEmailTemplateService emailTemplateService) : base(notifier, user)
+                IEmailTemplateService emailTemplateService,
+                UserRoleFactory roleFactory) : base(notifier, user)
         {
             _signInManager = signUserManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
             _emailService = emailService;
             _emailTemplateService = emailTemplateService;
+            _roleFactory = roleFactory;
         }
 
         /// <summary>
@@ -75,14 +78,9 @@ namespace CCRS.Api.V1.Controllers
             var result = await _userManager.CreateAsync(user, registerUser.Password);
             if (result.Succeeded)
             {
-                if (registerUser.IsDoctor)
-                {
-                    await _userManager.AddClaimAsync(user, new Claim("Role", "Doctor"));
-                }
-                else
-                {
-                    await _userManager.AddClaimAsync(user, new Claim("Role", "Patient"));
-                }
+                // Use a fábrica já injetada
+                var roleService = _roleFactory.GetRoleService(registerUser.UserRole.ToString());
+                await roleService.AddRole(user);
 
                 await _signInManager.SignInAsync(user, false);
 
