@@ -3,8 +3,6 @@ using CCRS.Api.Controllers;
 using CCRS.Api.ViewModels;
 using CCRS.Business.Interfaces;
 using CCRS.Business.Models;
-using CCRS.Business.Services;
-using IdentityModel.OidcClient;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CCRS.Api.V1.Controllers

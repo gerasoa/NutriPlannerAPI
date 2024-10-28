@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\Appointment.cs" />
     <Compile Remove="Models\AppointmentLocation.cs" />
     <Compile Remove="Models\ConsultationInformation.cs" />
     <Compile Remove="Models\IdentityDocument.cs" />
-    <Compile Remove="Models\ScheduleStatus.cs" />
   </ItemGroup>
 
   <ItemGroup>

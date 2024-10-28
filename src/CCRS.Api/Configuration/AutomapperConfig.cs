@@ -12,6 +12,7 @@ namespace CCRS.Api.Configuration
             CreateMap<Patient, PatientViewModel>().ReverseMap();
             CreateMap<Patient, PatientAddressViewModel>().ReverseMap();
             CreateMap<Address, AddressViewModel>().ReverseMap();
+            CreateMap<Appointment, AppointmentViewModel>().ReverseMap();
         }
     }
 }

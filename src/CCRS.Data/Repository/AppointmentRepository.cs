@@ -4,9 +4,9 @@ using CCRS.Data.Context;
 
 namespace CCRS.Data.Repository
 {
-    public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
+    public class DoctorRepository : Repository<Doctor>, IDoctorRepository
     {
-        public AppointmentRepository(AppDbContext db) : base(db)
+        public DoctorRepository(AppDbContext db) : base(db)
         {
         }
     }

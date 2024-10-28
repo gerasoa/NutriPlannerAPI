@@ -15,7 +15,8 @@ namespace CCRS.Business.Models
         [JsonIgnore]
         public virtual Doctor Doctor { get; set; }
 
-
+        [JsonIgnore]
+        public virtual Appointment Appointment { get; set; }
 
         //public DateOnly RegistrationDate { get; set; }
         //public IdentityDocument MyProperty { get; set; }
