@@ -2,9 +2,9 @@
 
 namespace CCRS.Business.Models.Validations
 {
-    public class DoctorValidation : AbstractValidator<Doctor>
+    public class PatientValidation : AbstractValidator<Patient>
     {
-        public DoctorValidation()
+        public PatientValidation()
         {
             RuleFor(c => c.Name)
                 .NotEmpty();

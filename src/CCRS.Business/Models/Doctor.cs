@@ -1,4 +1,6 @@
-﻿namespace CCRS.Business.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CCRS.Business.Models
 {
     public class Doctor : Entity
     {
@@ -7,6 +9,10 @@
         public bool OffersOnlineConsultations { get;  set; }
         public IEnumerable<Patient> Patients { get; set; }
 
+
+
+        [JsonIgnore]
+        public virtual Appointment Appointment { get; set; }
 
         //public List<AppointmentLocation> AppointmentLocations { get; private set; }
 

@@ -1,4 +1,7 @@
-﻿namespace CCRS.Business.Models
+﻿using CCRS.Business.Models.Enums;
+using System.Text.Json.Serialization;
+
+namespace CCRS.Business.Models
 {
     public class Appointment : Entity
     {
@@ -15,17 +18,26 @@
         /// <summary>
         /// The location of the appointment.
         /// </summary>
-        public AppointmentLocation AppointmentLocation { get; set; }
+        //public AppointmentLocation AppointmentLocation { get; set; }
 
         /// <summary>
         /// The unique identifier of the patient profile associated with this appointment.
         /// </summary>
-        public Guid PatientProfileId { get; set; }
+        public Guid PatientId { get; set; }
 
+        /// <summary>
+        /// The unique identifier of the patient profile associated with this appointment.
+        /// </summary>
+        public Guid DoctorId { get; set; }
         /// <summary>
         /// Any additional comments or notes related to the appointment, providing further context or information.
         /// </summary>
         public string Comments { get; set; }
 
+
+        [JsonIgnore]
+        public virtual Patient Patient { get; set; }
+        [JsonIgnore]
+        public virtual Doctor Doctor { get; set; }
     }
 }

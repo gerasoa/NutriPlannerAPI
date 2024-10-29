@@ -45,7 +45,8 @@ namespace CCRS.Api.Configuration
             services.AddScoped<IUserRoleService, DoctorRoleService>();  // Se quiser injetar diretamente um serviço específico
             services.AddScoped<IUserRoleService, PatientRoleService>(); // Para outro tipo de serviço
 
-
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
             return services;
         }
