@@ -27,10 +27,13 @@ heroku config:set DOTNET_CLI_TELEMETRY_OPTOUT=true --app nutri-planner
 # 7. ADICIONAR O REMOTE DO HEROKU (se não existir)
 heroku git:remote -a nutri-planner
 
-# 8. FAZER UM NOVO DEPLOY
+# 8. FAZER UM NOVO DEPLOY (correção do Procfile)
 git add .
-git commit -m "Fix Heroku buildpack and configuration"
-git push heroku main
+git commit -m "Fix Procfile path to correct publish directory"
+git push heroku heroku-branch:main
 
 # 9. VERIFICAR OS LOGS PARA VER SE FUNCIONOU
-heroku logs --tail --app nutri-planner
+heroku logs --app nutri-planner --num 50
+
+# 10. VERIFICAR SE A APLICAÇÃO ESTÁ FUNCIONANDO
+heroku open --app nutri-planner
