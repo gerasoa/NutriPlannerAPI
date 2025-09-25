@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CCRS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241024210943_Appointment")]
-    partial class Appointment
+    [Migration("20241030233812_AddConsultationConfig")]
+    partial class AddConsultationConfig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,62 @@ namespace CCRS.Data.Migrations
                     b.ToTable("Appointment", (string)null);
                 });
 
+            modelBuilder.Entity("CCRS.Business.Models.AvailableSlot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ConsultationConfigId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("Slot")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultationConfigId");
+
+                    b.ToTable("AvailableSlot");
+                });
+
+            modelBuilder.Entity("CCRS.Business.Models.ConsultationConfig", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ConsultationType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("LunchBreakEnd")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("LunchBreakStart")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimeBetweenConsults")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConsultationConfigs", (string)null);
+                });
+
             modelBuilder.Entity("CCRS.Business.Models.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -131,6 +187,30 @@ namespace CCRS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Doctor", (string)null);
+                });
+
+            modelBuilder.Entity("CCRS.Business.Models.OfficeLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ConsultationConfigId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultationConfigId");
+
+                    b.ToTable("OfficeLocation");
                 });
 
             modelBuilder.Entity("CCRS.Business.Models.Patient", b =>
@@ -193,6 +273,26 @@ namespace CCRS.Data.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("CCRS.Business.Models.AvailableSlot", b =>
+                {
+                    b.HasOne("CCRS.Business.Models.ConsultationConfig", "ConsultationConfig")
+                        .WithMany("AvailableSlots")
+                        .HasForeignKey("ConsultationConfigId")
+                        .IsRequired();
+
+                    b.Navigation("ConsultationConfig");
+                });
+
+            modelBuilder.Entity("CCRS.Business.Models.OfficeLocation", b =>
+                {
+                    b.HasOne("CCRS.Business.Models.ConsultationConfig", "ConsultationConfig")
+                        .WithMany("OfficeLocations")
+                        .HasForeignKey("ConsultationConfigId")
+                        .IsRequired();
+
+                    b.Navigation("ConsultationConfig");
+                });
+
             modelBuilder.Entity("CCRS.Business.Models.Patient", b =>
                 {
                     b.HasOne("CCRS.Business.Models.Doctor", "Doctor")
@@ -201,6 +301,13 @@ namespace CCRS.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("CCRS.Business.Models.ConsultationConfig", b =>
+                {
+                    b.Navigation("AvailableSlots");
+
+                    b.Navigation("OfficeLocations");
                 });
 
             modelBuilder.Entity("CCRS.Business.Models.Doctor", b =>

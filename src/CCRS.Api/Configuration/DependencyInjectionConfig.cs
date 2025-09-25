@@ -48,6 +48,10 @@ namespace CCRS.Api.Configuration
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
 
+            services.AddScoped<IConsultationConfigRepository, ConsultationConfigRepository>();
+            services.AddScoped<IConsultationConfigService, ConsultationConfigService>();
+
+
             return services;
         }
     }

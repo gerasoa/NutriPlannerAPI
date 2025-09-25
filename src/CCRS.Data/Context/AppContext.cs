@@ -20,6 +20,7 @@ namespace CCRS.Data.Context
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<ConsultationConfig> ConsultationConfigs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

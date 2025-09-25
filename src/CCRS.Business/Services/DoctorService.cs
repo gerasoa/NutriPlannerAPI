@@ -35,7 +35,6 @@ namespace CCRS.Business.Services
         public void Dispose()
         {
             _doctorRepository?.Dispose();
-            _doctorRepository?.Dispose();
         }
     }
 }

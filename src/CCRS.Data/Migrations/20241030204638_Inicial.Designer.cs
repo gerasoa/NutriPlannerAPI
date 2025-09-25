@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CCRS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241011201557_IdentityDocument")]
-    partial class IdentityDocument
+    [Migration("20241030204638_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,39 @@ namespace CCRS.Data.Migrations
                     b.ToTable("Address", (string)null);
                 });
 
+            modelBuilder.Entity("CCRS.Business.Models.Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ScheduledTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId")
+                        .IsUnique();
+
+                    b.HasIndex("PatientId")
+                        .IsUnique();
+
+                    b.ToTable("Appointment", (string)null);
+                });
+
             modelBuilder.Entity("CCRS.Business.Models.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -119,6 +152,9 @@ namespace CCRS.Data.Migrations
                     b.Property<string>("IdentityDocumenty")
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("varchar(100)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(200)");
@@ -140,6 +176,23 @@ namespace CCRS.Data.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("CCRS.Business.Models.Appointment", b =>
+                {
+                    b.HasOne("CCRS.Business.Models.Doctor", "Doctor")
+                        .WithOne("Appointment")
+                        .HasForeignKey("CCRS.Business.Models.Appointment", "DoctorId")
+                        .IsRequired();
+
+                    b.HasOne("CCRS.Business.Models.Patient", "Patient")
+                        .WithOne("Appointment")
+                        .HasForeignKey("CCRS.Business.Models.Appointment", "PatientId")
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("CCRS.Business.Models.Patient", b =>
                 {
                     b.HasOne("CCRS.Business.Models.Doctor", "Doctor")
@@ -152,12 +205,16 @@ namespace CCRS.Data.Migrations
 
             modelBuilder.Entity("CCRS.Business.Models.Doctor", b =>
                 {
+                    b.Navigation("Appointment");
+
                     b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("CCRS.Business.Models.Patient", b =>
                 {
                     b.Navigation("Address");
+
+                    b.Navigation("Appointment");
                 });
 #pragma warning restore 612, 618
         }

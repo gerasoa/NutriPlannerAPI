@@ -6,7 +6,7 @@ namespace CCRS.Data.Repository
 {
     public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
     {
-        public AppointmentRepository(AppDbContext db) : base(db)
+        public AppointmentRepository(AppDbContext context) : base(context)
         {
         }
     }
