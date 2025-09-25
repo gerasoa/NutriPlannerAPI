@@ -26,9 +26,17 @@ try {
 try {
     heroku apps:info $APP_NAME | Out-Null
     Write-Host "📱 App $APP_NAME already exists" -ForegroundColor Blue
+    
+    # Ensure .NET buildpack is set
+    Write-Host "🔧 Ensuring .NET buildpack is set..." -ForegroundColor Green
+    heroku buildpacks:set https://github.com/heroku/dotnet-buildpack --app $APP_NAME
 } catch {
     Write-Host "📱 Creating Heroku app: $APP_NAME" -ForegroundColor Green
     heroku create $APP_NAME
+    
+    # Set .NET buildpack
+    Write-Host "🔧 Setting .NET buildpack..." -ForegroundColor Green
+    heroku buildpacks:set https://github.com/heroku/dotnet-buildpack --app $APP_NAME
     
     # Add PostgreSQL addon
     Write-Host "🐘 Adding PostgreSQL addon..." -ForegroundColor Green
@@ -39,6 +47,9 @@ try {
 Write-Host "⚙️  Setting environment variables..." -ForegroundColor Green
 heroku config:set ASPNETCORE_ENVIRONMENT=Production --app $APP_NAME
 heroku config:set JWT_SECRET="47D2E976-3006-44B9-87D2-0560D19B35D2" --app $APP_NAME
+heroku config:set PROJECT_FILE=src/CCRS.Api/CCRS.Api.csproj --app $APP_NAME
+heroku config:set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true --app $APP_NAME
+heroku config:set DOTNET_CLI_TELEMETRY_OPTOUT=true --app $APP_NAME
 
 # Optional: Set ELMAH.IO configuration (uncomment and set your values)
 # heroku config:set ELMAH_API_KEY="your_elmah_api_key" --app $APP_NAME

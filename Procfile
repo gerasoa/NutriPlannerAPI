@@ -1,1 +1,1 @@
-web: cd src/CCRS.Api && dotnet CCRS.Api.dll --urls="http://+:$PORT"
+web: dotnet src/CCRS.Api/CCRS.Api.dll

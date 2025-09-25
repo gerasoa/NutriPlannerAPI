@@ -1,0 +1,17 @@
+# Comandos para corrigir o deploy no Heroku
+
+# 1. Configurar o buildpack correto (.NET)
+heroku buildpacks:set https://github.com/heroku/dotnet-buildpack --app nutri-planner-5a6043be9db0
+
+# 2. Configurar variáveis de ambiente necessárias
+heroku config:set PROJECT_FILE=src/CCRS.Api/CCRS.Api.csproj --app nutri-planner-5a6043be9db0
+heroku config:set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true --app nutri-planner-5a6043be9db0
+heroku config:set DOTNET_CLI_TELEMETRY_OPTOUT=true --app nutri-planner-5a6043be9db0
+
+# 3. Fazer um novo deploy
+git add .
+git commit -m "Fix Heroku buildpack and configuration"
+git push heroku main
+
+# 4. Verificar os logs
+heroku logs --tail --app nutri-planner-5a6043be9db0

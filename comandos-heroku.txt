@@ -1,0 +1,36 @@
+# Execute estes comandos no terminal do VS Code, um por vez:
+
+# 1. OBTER API KEY DO HEROKU
+# 1. Vá para https://dashboard.heroku.com/account
+# 2. Na seção "API Key", clique em "Reveal"
+# 3. Copie a API Key (ex: 12345678-1234-1234-1234-123456789abc)
+
+# 2. CONFIGURAR API KEY NO TERMINAL (SUBSTITUA pela sua chave real)
+export HEROKU_API_KEY=12345678-1234-1234-1234-123456789abc
+
+# 3. VERIFICAR SE FUNCIONOU
+heroku auth:whoami
+
+# 4. DESCOBRIR O NOME EXATO DO SEU APP
+heroku apps
+
+# ✅ NOME DO APP DESCOBERTO: nutri-planner
+
+# 5. CONFIGURAR O BUILDPACK CORRETO (.NET)
+heroku buildpacks:set https://github.com/heroku/dotnet-buildpack --app nutri-planner
+
+# 6. CONFIGURAR VARIÁVEIS DE AMBIENTE NECESSÁRIAS
+heroku config:set PROJECT_FILE=src/CCRS.Api/CCRS.Api.csproj --app nutri-planner
+heroku config:set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true --app nutri-planner
+heroku config:set DOTNET_CLI_TELEMETRY_OPTOUT=true --app nutri-planner
+
+# 7. ADICIONAR O REMOTE DO HEROKU (se não existir)
+heroku git:remote -a nutri-planner
+
+# 8. FAZER UM NOVO DEPLOY
+git add .
+git commit -m "Fix Heroku buildpack and configuration"
+git push heroku main
+
+# 9. VERIFICAR OS LOGS PARA VER SE FUNCIONOU
+heroku logs --tail --app nutri-planner
