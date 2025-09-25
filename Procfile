@@ -1,1 +1,0 @@
-web: dotnet src/CCRS.Api/CCRS.Api.dll
