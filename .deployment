@@ -1,1 +1,2 @@
-src/CCRS.Api/CCRS.Api.csproj
+[config]
+project = src/CCRS.Api/CCRS.Api.csproj
