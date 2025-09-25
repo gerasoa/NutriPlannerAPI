@@ -1,1 +1,1 @@
-web: cd $HOME/heroku_output && ./CCRS.Api
+web: cd src/CCRS.Api/bin/publish && ./CCRS.Api --urls http://*:$PORT
