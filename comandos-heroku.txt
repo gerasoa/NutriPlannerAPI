@@ -35,5 +35,15 @@ git push heroku heroku-branch:main
 # 9. VERIFICAR OS LOGS PARA VER SE FUNCIONOU
 heroku logs --app nutri-planner --num 50
 
-# 10. VERIFICAR SE A APLICAÇÃO ESTÁ FUNCIONANDO
+# 10. CONFIGURAR VARIÁVEIS DE AMBIENTE (SEM BANCO POR ENQUANTO)
+heroku config:set ASPNETCORE_ENVIRONMENT=Production --app nutri-planner
+heroku config:set JWT_SECRET="47D2E976-3006-44B9-87D2-0560D19B35D2" --app nutri-planner
+
+# 11. CONFIGURAR CONNECTION STRING VAZIA (TEMPORÁRIO)
+heroku config:set ConnectionStrings__DefaultConnection="Data Source=memory.db" --app nutri-planner
+
+# 12. VERIFICAR SE A APLICAÇÃO ESTÁ FUNCIONANDO
 heroku open --app nutri-planner
+
+# 13. TESTAR ENDPOINTS DA API
+# https://nutri-planner-5a6043be9db0.herokuapp.com/swagger

@@ -15,6 +15,8 @@ builder.Configuration
 // Configure for Heroku deployment
 builder.ConfigureForHeroku();
 
+// Temporarily disabled for Heroku testing without database
+/*
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -22,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddIdentityConfiguration(builder.Configuration);
+*/
 
 //builder.Services.AddEndpointsApiExplorer();
 
